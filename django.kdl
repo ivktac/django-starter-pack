@@ -1,0 +1,29 @@
+layout {
+	pane size=1 borderless=true {
+		plugin location="zellij:tab-bar"
+	}
+
+	pane split_direction="vertical" {
+		pane edit="./py_client/basic.py" focus=true
+		pane split_direction="horizontal" size="30%" {
+			pane command="just" {
+				args "requests"
+				start_suspended true
+				name "Requests"
+			}
+			pane command="just" size="20%" {
+				args "server"
+				start_suspended true
+				name "Run Server"
+			}
+		}
+	}
+
+	floating_panes {
+		pane cwd="./backend"
+	}
+
+	pane size=2 borderless=true {
+		plugin location="zellij:status-bar"
+	}
+}
