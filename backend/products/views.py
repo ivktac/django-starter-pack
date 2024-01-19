@@ -1,3 +1,55 @@
-from django.shortcuts import render
+from rest_framework import generics
 
-# Create your views here.
+from .models import Product
+from .serializers import ProductSerializer
+
+
+class ProductListCreateApiView(generics.ListCreateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+    def perfom_create(self, serializer):
+        title = serializer.validated_data.get("title")
+        content = serializer.validated_data.get("content") or None
+        if content is None:
+            content = title
+        serializer.save(content=content)
+
+
+product_list_create_view = ProductListCreateApiView.as_view()
+
+
+class ProductDetailAPIView(generics.RetrieveAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+
+product_detail_view = ProductDetailAPIView.as_view()
+
+
+# @api_view(["GET", "POST"])
+# def product_alt_view(
+#     request: Request, pk: int | None = None, *args: Any, **kwargs: Any
+# ):
+#     method = request.method
+
+#     if method == "GET":
+#         if pk is not None:
+#             obj = get_object_or_404(Product, pk=pk)
+#             data = ProductSerializer(obj, many=False).data
+#             return Response(data)
+
+#         queryset = Product.objects.all()
+#         data = ProductSerializer(queryset, many=True).data
+#         return Response(data)
+
+#     if method == "POST":
+#         serializer = ProductSerializer(data=request.data)
+#         if serializer.is_valid(raise_exception=True):
+#             title = serializer.validated_data.get("title")
+#             content = serializer.validated_data.get("content") or None
+#             if content is None:
+#                 content = title
+#             serializer.save(content=content)
+#             return Response(serializer.data)
+#         return Response({"message": "Invalid Data"}, status=400)
