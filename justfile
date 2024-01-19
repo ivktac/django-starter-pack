@@ -34,7 +34,9 @@ export DEFAULT_PYTHON := if os_family() == "unix" { "python3" } else { "python" 
 	$BIN/python backend/manage.py runserver 8000
 
 @requests: env-start
-	$BIN/python py_client/basic.py
-	$BIN/python py_client/detail.py
-	$BIN/python py_client/create.py
-	$BIN/python py_client/list.py
+	# $BIN/python py_client/basic.py
+	# $BIN/python py_client/detail.py
+	# $BIN/python py_client/create.py
+	# $BIN/python py_client/list.py
+	# $BIN/python py_client/update.py
+	# $BIN/python py_client/delete.py
