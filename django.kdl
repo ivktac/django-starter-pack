@@ -4,7 +4,6 @@ layout {
 	}
 
 	pane split_direction="vertical" {
-		pane edit="./py_client/basic.py" focus=true
 		pane split_direction="horizontal" size="30%" {
 			pane command="just" {
 				args "requests"
@@ -17,6 +16,8 @@ layout {
 				name "Run Server"
 			}
 		}
+
+		pane focus=true
 	}
 
 	floating_panes {

@@ -1,5 +1,4 @@
-from rest_framework import authentication, generics, mixins
-
+from rest_framework import generics, mixins, permissions
 from rest_framework.request import Request
 
 from .models import Product
@@ -10,8 +9,7 @@ from .serializers import ProductSerializer
 class ProductListCreateApiView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    authentication_classes = [authentication.SessionAuthentication]
-    permission_classes = [IsStaffEditorPermission]
+    permission_classes = [permissions.IsAdminUser, IsStaffEditorPermission]
 
     def perform_create(self, serializer):
         title = serializer.validated_data.get("title")
@@ -50,6 +48,7 @@ class ProductDestroyAPIView(generics.DestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     lookup_field = "pk"
+    permission_classes = [permissions.IsAdminUser, IsStaffEditorPermission]
 
     def perform_destroy(self, instance):
         super().perform_destroy(instance)
